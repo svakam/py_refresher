@@ -1,6 +1,6 @@
 ### Simple Python refresher for data science/general needs
 
-(Notes and Jupyter Notebooks taken from Prof. Galen Egan's Foundations of Data Science course, Seattle University 2024)
+(Jupyter Notebooks taken from Prof. Galen Egan's Foundations of Data Science course, Seattle University 2024)
 
 
 Python fundamentals
@@ -100,7 +100,18 @@ Dictionaries
 
 Flow control
 - Logical operators
+  - This is how we handle 'Boolean logic', i.e. handling when things are True or False (reserved keywords)
+  - operators:
+    - ```a and b```
+    - ```a or b```
+    - ```not a```
+    - ```not a and b```
+  - Typically used into control flow within context of ```if/elif/else```
+    - ```if a:``` (use colon to start/continue control flow for if/elif)
+  - Comparing magnitudes: ```<, >, ==, <=, >=```
+  - *Zero or empty collections = false, non-zero = true*
 - For loops
+  - 
 - While loops
 
 
