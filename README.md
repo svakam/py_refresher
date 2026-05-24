@@ -51,13 +51,52 @@ Var assignment + data types
   - ```math.<func name>?``` -> execute cell, returns a documentation string # This didn’t work…but just hover over mystery fn next time?
 
 
-Lists
+Strings
+- Python has different "flavors" of strings to hold characters
+- Concatenation: ```<string1> + <string2>``` -> <string1string2>
+- Replace: ```.replace(<part of str to be replaced in original str>, <replacement>)```
+- Capitalize full string: ```.upper(str)```
+- Get index (0-indexed) of a char or start of substring in a string: ```.index("substr")```
+- How do we split a string? Use desired char to split on, then ```str.split("<splitter>")```
+  - Should return a ```List``` of the substrings that were split up
+  - Does NOT mutate the original string
+- How do we get the last element of a List? ```list[-1]```
 
+
+Lists
+- Lists (in Python) are:
+  - Mutable
+  - Ordered
+  - Container objects (can store other 'objects' (of different types))
+  - 0-indexed 
+- Initialized with ```[ ]``` square brackets
+- Length of list: ```len(my_list)```
+- As mentioned: get the last element of a List via ```list[-1]```
+- How do we access _multiple elements_ at a time? *Slicing* via ```:``` operator
+  - E.g. ```my_list[:2]``` will return everything from 0 _up to_ (and not including) 2
+  - E.g. ```my_list[2:]``` will return everything from 2 up to the end of the list (included)
+- How do we _extract_ elements N at a time? Via ```::``` operator
+  - E.g. ```my_list[::N]```
+  - For every extraction, start from current index + 1, move forward N times, then extract
+    - ![List extraction example](img/list_extr.png)
 
 Tuples
+- An _immutable_ list
+Initialized with ```( )``` parentheses
+- Trying to update an element will throw an error
+- Slicing works the same as for a list
 
 
 Dictionaries
+- A list but each element being a key-value pair
+- Access values by passing in the corresponding key
+- Initialized with ```{ }``` curly brackets
+  - e.g. for element in dict of "key_1: value_1", ```sample_dict[key_1]``` should return ```value_1```
+- Keys can be integers or strings
+- Keys can be of different types within same dict, but ideally should be same type
+  - ![Dictionary diff type e.g.](img/dict.png)
+- Particularly useful for storing numerical values associated with easily-remembered descriptions for the values as the keys
+- Nested dictionaries: the nested dict can be stored with ```{ }``` as value of k-v pair 
 
 Flow control
 - Logical operators
