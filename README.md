@@ -110,9 +110,21 @@ Flow control
     - ```if a:``` (use colon to start/continue control flow for if/elif)
   - Comparing magnitudes: ```<, >, ==, <=, >=```
   - *Zero or empty collections = false, non-zero = true*
-- For loops
-  - 
-- While loops
+- For loops: for repeating code a *known* number of times
+  - ```range(x)```: generates an iterable of integers between 0 and x (non-inclusive)
+    - e.g. ```for i in range(10):```
+  - Loop through collections (lists, tuples, dicts)
+    - Note: must wrap the collection in ```enumerate()``` to make it return both the index AND element
+      - e.g. ```a = [10, 9, 8, 7]```
+      - ```for index, elem in enumerate(a):```
+  - ___ comprehension: shortcut of the for-loop construct
+    - List comprehension: create a list
+      - E.g. ```b = [i * 2 for i in a]```
+    - Dictionary comprehension: create a dict
+      - E.g. ```dict_comp = {str(i) + " times 2":i * 2 for i in range(10)}```
+        - ![dict_comp](img/dict_comp.png)
+- While loops: for repeating code an *unknown* number of times until condition met
+  - ```while <condition>:```
 
 
 Functions and classes
