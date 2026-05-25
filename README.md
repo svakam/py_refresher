@@ -79,6 +79,26 @@ Lists
   - E.g. ```my_list[::N]```
   - For every extraction, start from current index + 1, move forward N times, then extract
     - ![List extraction example](img/list_extr.png)
+- Copy existing list into new list (shallow copy)
+  - Slicing: ```list_b = list_a[:]```
+  - ```list()``` constructor: ```list_b = list(list_a)```
+  - ```.copy()``` (Python 3.3+): ```list_b = list_a.copy()```
+  - List comprehension (i.e. using one-line for loop): ```list_b = [item for item in list_a]```
+- Deep copy list: need ```deepcopy``` from ```copy``` module
+  - For nested objects (e.g. nested lists)
+- List examples:
+  - What does this return? ```all(item in list_a for item in list_b)```
+    - True
+    - Grabs an item from list_b and checks if it exists in list_a
+    - all() only returns True if every comparison returns True
+    - Nested loop (bad complexity)
+
+Sets
+- A list but restricted to unique elements only
+- ```set(list_x)```: returns a set of unique values
+- ```set_1.union(set_2)```: returns a unified set
+- ```set_1.intersection(set_2)```: returns intersection
+- ```set_1.symmetric_difference(set_2)```: returns the opposite of intersection
 
 Tuples
 - An _immutable_ list
@@ -91,12 +111,16 @@ Dictionaries
 - A list but each element being a key-value pair
 - Access values by passing in the corresponding key
 - Initialized with ```{ }``` curly brackets
-  - e.g. for element in dict of "key_1: value_1", ```sample_dict[key_1]``` should return ```value_1```
+  - e.g. for element in sample_dict of "key_1: value_1", ```sample_dict[key_1]``` should return ```value_1```
 - Keys can be integers or strings
 - Keys can be of different types within same dict, but ideally should be same type
   - ![Dictionary diff type e.g.](img/dict.png)
 - Particularly useful for storing numerical values associated with easily-remembered descriptions for the values as the keys
 - Nested dictionaries: the nested dict can be stored with ```{ }``` as value of k-v pair 
+  - Note: Python by default passes only the top-level keys into the loop. Won't have access to key-value pairs by 
+    iterating over the dictionary, just the keys (triggering ValueError: too many values to unpack). To loop through
+    both keys and values at the same time, you must use the .items() method
+  - Correct: ![Correct nested access](img/dict_nested.png)
 
 Flow control
 - Logical operators
