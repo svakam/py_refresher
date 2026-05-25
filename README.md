@@ -12,12 +12,12 @@ Python fundamentals
 
 Basics
 - What is Python?
-- - High-level language; interpreted (don’t need to compile code before running it) and dynamically-typed (type errors not checked before runtime -> runtime failures can occur)
+  - High-level language; interpreted (don’t need to compile code before running it) and dynamically-typed (type errors not checked before runtime -> runtime failures can occur)
 - What is Jupyter Notebook?
-- - Nice for combining text (supports both markdown and latex) with code
-- - - Either text or code can go into a cell
-- - Code gets executed via Python interpreter (or kernel) on current machine
-- - Execute a current code cell via Shift + Enter
+  - Nice for combining text (supports both markdown and latex) with code
+    - Either text or code can go into a cell
+  - Code gets executed via Python interpreter (or kernel) on current machine
+  - Execute a current code cell via Shift + Enter
 
 
 Var assignment + data types
@@ -152,5 +152,16 @@ Flow control
 
 
 Functions and classes
-- Functions
+- Functions: code reusability (running a section of code more than once whenever function called)
+  - ```def <function name>(arguments):```
 - Classes
+  - An example of OOP; a paradigm where related code bits and functionality are grouped in 'objects'
+    - Must be initialized in memory via instantiation for use
+    - Declaration
+      - ```class <class name>:```
+    - Constructor definition: the ```__init__``` function; defines how you initialize an instance of the class
+      - By convention, 1st argument of ```__init__``` is always ```self```; refers to the instance of the class
+      - e.g. ```def __init__(self, <arg1name=defaultarg1value>, <arg2...>):```
+    - Class methods: can be accessed from any class instance
+      - Required to pass in ```self``` as argument every time
+      - e.g. ```def <method_name>(self):```
