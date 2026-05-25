@@ -1,26 +1,37 @@
-### Simple Python refresher for data science/general needs
+# Simple Python refresher for data science/general needs
 
 (Jupyter Notebooks taken from Prof. Galen Egan's Foundations of Data Science course, Seattle University 2024)
 
+## Table of Contents
+1. [Python Fundamentals](#python-fundamentals)
+2. [Data Manipulation](#data-manipulation)
+3. [Data Visualization](#data-visualization)
+4. [Data Preparation](#data-preparation)
 
-Python fundamentals
-- Variables
-- Types
-- Arithmetic
-- Ctrl flow
+
+## Python Fundamentals
+1. [Basics](#basics)
+2. [Var assignment + data types](#var-assignment--data-types)
+3. [Strings](#strings) 
+4. [Lists](#lists)
+5. [Sets](#sets)
+6. [Tuples](#tuples)
+7. [Dictionaries](#dictionaries)
+8. [Flow control](#flow-control)
+9. [Functions and classes](#functions-and-classes)
 
 
-Basics
+### Basics
 - What is Python?
   - High-level language; interpreted (don’t need to compile code before running it) and dynamically-typed (type errors not checked before runtime -> runtime failures can occur)
 - What is Jupyter Notebook?
-  - Nice for combining text (supports both markdown and latex) with code
+  - Nice for combining text (supports both Markdown and latex) with code
     - Either text or code can go into a cell
   - Code gets executed via Python interpreter (or kernel) on current machine
   - Execute a current code cell via Shift + Enter
 
 
-Var assignment + data types
+### Var assignment + data types
 - Integers, floating point numbers
 - F-strings: ```print(f”string string2 {var substitution}”)```
 - Check data type of variable: type(<variable>)
@@ -51,7 +62,7 @@ Var assignment + data types
   - ```math.<func name>?``` -> execute cell, returns a documentation string # This didn’t work…but just hover over mystery fn next time?
 
 
-Strings
+### Strings
 - Python has different "flavors" of strings to hold characters
 - Concatenation: ```<string1> + <string2>``` -> <string1string2>
 - Replace: ```.replace(<part of str to be replaced in original str>, <replacement>)```
@@ -63,7 +74,7 @@ Strings
 - How do we get the last element of a List? ```list[-1]```
 
 
-Lists
+### Lists
 - Lists (in Python) are:
   - Mutable
   - Ordered
@@ -93,21 +104,21 @@ Lists
     - all() only returns True if every comparison returns True
     - Nested loop (bad complexity)
 
-Sets
+### Sets
 - A list but restricted to unique elements only
 - ```set(list_x)```: returns a set of unique values
 - ```set_1.union(set_2)```: returns a unified set
 - ```set_1.intersection(set_2)```: returns intersection
 - ```set_1.symmetric_difference(set_2)```: returns the opposite of intersection
 
-Tuples
+### Tuples
 - An _immutable_ list
 Initialized with ```( )``` parentheses
 - Trying to update an element will throw an error
 - Slicing works the same as for a list
 
 
-Dictionaries
+### Dictionaries
 - A list but each element being a key-value pair
 - Access values by passing in the corresponding key
 - Initialized with ```{ }``` curly brackets
@@ -122,7 +133,7 @@ Dictionaries
     both keys and values at the same time, you must use the .items() method
   - Correct: ![Correct nested access](img/dict_nested.png)
 
-Flow control
+### Flow control
 - Logical operators
   - This is how we handle 'Boolean logic', i.e. handling when things are True or False (reserved keywords)
   - operators:
@@ -151,7 +162,7 @@ Flow control
   - ```while <condition>:```
 
 
-Functions and classes
+### Functions and classes
 - Functions: code reusability (running a section of code more than once whenever function called)
   - ```def <function name>(arguments):```
 - Classes
@@ -165,3 +176,17 @@ Functions and classes
     - Class methods: can be accessed from any class instance
       - Required to pass in ```self``` as argument every time
       - e.g. ```def <method_name>(self):```
+
+[Back to top](#table-of-contents)
+
+## Data Manipulation
+
+[Back to top](#table-of-contents)
+
+## Data Visualization
+
+[Back to top](#table-of-contents)
+
+## Data Preparation
+
+[Back to top](#table-of-contents)
