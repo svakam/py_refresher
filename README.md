@@ -180,6 +180,51 @@ Initialized with ```( )``` parentheses
 [Back to top](#table-of-contents)
 
 ## Data Manipulation
+1. [Specific package imports](#specific-package-imports)
+2. [Pandas](#pandas)
+3. [Parsing Data](#parsing-data)
+4. [Pandas Alternatives](#pandas-alternatives)
+
+### Specific package imports
+- Pandas: ```import pandas as pd```
+- Numpy: ```import numpy as np```
+- Scikit-learn: import one class or function at a time as needed (LinearRegression, etc.)
+
+### Pandas
+- Read in a .csv file: ```pd.read_csv(<file path>)```
+  - This returns a *DataFrame*; ```df = pd.read_csv(<file path>)```
+- What's a DataFrame (df)?
+  - Kind of like an object/class that contains useful methods for working with data
+- Printing the df -> gives the rows of the .csv like an Excel sheet
+  - The rows could be numbered starting from 0, or in general an array of integers called the *DataFrame index*
+  - The index can be ints, strings, times, or anything
+  - ```print(df.index)``` -> RangeIndex(start=0, stop=<stop>, step=<increment>)
+- How to get the columns of the df?
+  - ```print(df.columns)``` -> ```Index(['<col1name>', '<col2name>', ...])```
+- The indices and column names help arrange and label data
+- .csv's data can be viewed without its labels: ```df.values``` -> just gives an array of rows
+  - Data type of ```df.values``` is ```numpy.ndarray```
+    - Under the hood, pandas stores data in Numpy ndarrays (short for N-dimensional arrays) that store 
+      any # of values; Numpy arrays are a standard data type for storing/performing calculations on data in Python
+- df helpers
+  - ```df.head()```: first 5 rows
+  - ```df.tail()```: last 5 rows
+  - ```df.shape```: returns (# rows, # cols) of the data
+  - How do we find the data types of each col? ```df.dtypes```
+  - ...find general info of the df? ```df.info()```
+  - ...find general statistical info? ```df.describe()``` - returns count/mean/std/min for columns
+    - We can also group by a column and then get statistics on that grouping
+      - E.g. ```df.groupby("column_name").describe()```
+- Accessing and slicing dfs
+  - Why? Because much of the time we extract the interesting portion of the data, get rid of the rest, use part of the 
+    data for training a model, another part for testing the model, and so on. Pandas can help with this
+  - Get a single column's data: ```col = df["column_name"]```
+    - This data type is ```type(col)``` or a ```Series```, like a 1D DataFrame
+    - Many methods apply only to Series, but not to dfs
+
+### Parsing data
+
+### Pandas alternatives
 
 [Back to top](#table-of-contents)
 
