@@ -220,7 +220,24 @@ Initialized with ```( )``` parentheses
     data for training a model, another part for testing the model, and so on. Pandas can help with this
   - Get a single column's data: ```col = df["column_name"]```
     - This data type is ```type(col)``` or a ```Series```, like a 1D DataFrame
-    - Many methods apply only to Series, but not to dfs
+    - Many methods apply only to Series but not to dfs
+  - Get multiple columns of data: ```cols_data = df[["col_1_name", "col_2_name"]]```
+    - Pass in *list* of columns
+    - Then can run ```.head()```, etc.
+    - What is the ```type(cols_data)```? df (>1 col)
+  - Get only x number of indices from a df: ```df_x = df.loc[:x]```
+    - Contrary to list slicing, ```x``` is included in the index (inclusive indexing)
+    - If indices are NOT integers, would have to specify the indices
+      - e.g. for indices "a" and "b", ```df2.loc[["a", "b"]]```
+  - Get certain indices and certain columns (akin to a "sub" df)
+    - E.g. for indices "a" and "b" and columns "green" and blue": ```df2_2gb = df2.loc[["a", "b"], ["green", "blue"]]```
+      - Pass in a list of the indices and a separate list of the cols
+      - ![DF Slice Row](img/df_slice_row_col.png)
+  - If needing to treat a df like an N-dim. array or list and access contents via int row/col numbers, need ```.iloc()```
+    - E.g. ```df2_i = df2.iloc[:2, 1:]```, i.e. get all rows up to 2nd, and all cols starting at 1st
+  - ```.loc()```: tell pandas to return specific index and column *names*
+  - ```.iloc()```: tell pandas to return specific row and column *numbers*
+  - 
 
 ### Parsing data
 
