@@ -299,8 +299,64 @@ If don't want to save the df index as a column:
 ```df.to_csv(<file_path>, index=False)```
 
 ### Pandas: Parsing data
+If we need multiple datasets from different places for a common project, what are the issues we could run into?
+- Datasets often have inconsistencies between each other and in and of themselves
+  - Labels
+  - Spacing
+  - Separators
+  - E.g. ![Inconsistent](img/inconsistent_data_1.png)
+
+What are solutions?
+- `.read_csv()` is a very complicated and flexible function to handle multiple edge cases
+  - [Documentation](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html)
+  - Misplaced or missing header (e.g. header/column names could try to show up as a data value): 
+    - Skip first row or first couple rows
+    - E.g. ```pd.read_csv("<file_path>", skiprows=2)```
+  - Non-comma delimiter:
+    - `pd.read_csv("<file_path>", skiprows=x, sep="<separator type, regex>")`
+    - E.g. `...sep="\t"`
+  - Bad rows or bad lines (e.g. extra fields):
+    - `.read_csv(...on_bad_lines="skip")`
+  - Inconsistent delimiter (e.g. tabs, then spaces, then tabs, etc.):
+    - Handle more general case via regex
+      - E.g. a general separator: `.read_csv(...sep=r"\s+", ...)`
+        - `r` instructs interpreting backslash as part of regex rather than as an escape character
+  - Non-standard representations of null
+    - Standard: a numpy `NaN`
+    - Example of non-standard that could show up in a field: "NotANumber"
+    - Must explicitly pass in a list of expected representations of null found in the dataset
+      - E.g. `.read_csv(...na_values=["NotANumber"], ...)`
+
+Datasets also may need to be loaded from either local or web-based sources. Different formats of each dataset are 
+technical obstacle when combining data
+- Not all data comes from `.csv`
+  - Data from public Internet, or API calls to internal endpoints can come as `json`
+
+Solutions?
+- Python's "requests" module: allows *loading json data into Python dictionary* -> can use as-is or convert into df
+  1. `import requests`
+  2. Set URL that will request data from an API
+  3. `response = requests.get(url)`
+  - See the response:
+    - Just `response` will only display response code
+    - `response.json()`: shows json data
+    - To get a more compact view: `response.json().keys()`
+    - Once a dictionary list within the response is identified as possible extraction, we can convert to df:
+      - `pd.DataFrame(data=<list>)` (argument name: data)
+      - E.g. ![List from API](img/list_from_api.png)
+        - List contains rows as dictionary format `{}`
+        - After df: ![List from API to df](img/list_api_to_df.png)
+
 
 ### Pandas: Alternatives
+- R: basically Python's answer to the R `data.frame` data type
+  - Has all the functionality of pandas (and more)
+  - Best for statistics-focused work
+    - Some functionality doesn't exist in Python, or if it does, requires tedious Python package mgmt
+  - Not a good choice for building full software stack (not what it was designed for)
+    - Probably don't want Python for your full stack, either
+- polars: similar to pandas, becoming more popular
+  - Significant efficiency gains, best for large amounts of data
 
 [Back to top](#table-of-contents)
 
