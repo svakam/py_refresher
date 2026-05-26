@@ -184,8 +184,9 @@ Initialized with ```( )``` parentheses
 2. [Pandas: Basics](#pandas-basics)
 3. [Pandas: Accessing & slicing DataFrames](#pandas-accessing-and-slicing-dataframes)
 4. [Pandas: Merging DataFrames](#pandas-merging-dataframes)
-3. [Pandas: Parsing Data](#parsing-data)
-4. [Pandas: Alternatives](#pandas-alternatives)
+5. [Pandas: Saving DataFrames](#pandas-saving-dataframes)
+5. [Pandas: Parsing Data](#parsing-data)
+6. [Pandas: Alternatives](#pandas-alternatives)
 
 ### Specific package imports
 - Pandas: ```import pandas as pd```
@@ -197,6 +198,8 @@ Initialized with ```( )``` parentheses
   - This returns a *DataFrame*; ```df = pd.read_csv(<file path>)```
 - What's a DataFrame (df)?
   - Kind of like an object/class that contains useful methods for working with its data
+- Create a new df: ```df = pd.DataFrame({})``` (effectively passed in a dictionary)
+  - E.g. ```df = pd.DataFrame({'day': [1,2,3,4,5], 'meas': [0.1,0.2,0.3,0.4,0.5]})```
 - Printing the df -> gives the rows of the .csv like an Excel sheet
   - The rows could be numbered starting from 0, or in general an array of integers called the *DataFrame index*
   - The index can be ints, strings, times, or anything
@@ -273,9 +276,31 @@ What if we want to slice, column-wise, by the column's name (instead of index)?
   (reminder: index column counts as 0th)
   ```col_idx = df.columns.get_loc("petal_length") ... df_final = df.iloc[-50:, col_idx]```
 
-### Parsing data
+### Pandas: Merging DataFrames
+Pandas methods for merging rely on relational db-based languages (e.g. SQL)
+- ```df_left.merge(df2_right, on=<join key>, how=<join method>)```
+- Join key: what are we joining on (shared column, index name or list of names)?
+  - Is often the *independent variable* (e.g. time in a time series dataset to match measurements to same time basis)
+  - Join key arg: ```on=```, or if key named something different in L or R dfs, ```left_on``` or ```right_on```
+  - Join method arg: ```how=```; specifies which dfs we use in order to create new merged key (equiv. to left join, 
+    right join, outer join, etc.)
+    - Default if not specified: ```inner```
+- E.g. ```df_out = df1.merge(df2, on = 'day', how = 'left')
+  - Would expect to get "NaN" for any values in the right df that don't exist for the key
+  - ![Join left](img/merge_joinleft.png)
+- Can also merge on multiple keys
+  - E.g. ![Left right](img/left_right_twokeys.png)
+  - ![Merge two keys right join](img/merge_twokeys_joinright.png)
 
-### Pandas alternatives
+### Pandas: Saving DataFrames
+```df.to_csv(<file_path>)```
+
+If don't want to save the df index as a column:
+```df.to_csv(<file_path>, index=False)```
+
+### Pandas: Parsing data
+
+### Pandas: Alternatives
 
 [Back to top](#table-of-contents)
 
