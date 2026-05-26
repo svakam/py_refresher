@@ -181,30 +181,32 @@ Initialized with ```( )``` parentheses
 
 ## Data Manipulation
 1. [Specific package imports](#specific-package-imports)
-2. [Pandas](#pandas)
-3. [Parsing Data](#parsing-data)
-4. [Pandas Alternatives](#pandas-alternatives)
+2. [Pandas: Basics](#pandas-basics)
+3. [Pandas: Accessing & slicing DataFrames](#pandas-accessing-and-slicing-dataframes)
+4. [Pandas: Merging DataFrames](#pandas-merging-dataframes)
+3. [Pandas: Parsing Data](#parsing-data)
+4. [Pandas: Alternatives](#pandas-alternatives)
 
 ### Specific package imports
 - Pandas: ```import pandas as pd```
 - Numpy: ```import numpy as np```
 - Scikit-learn: import one class or function at a time as needed (LinearRegression, etc.)
 
-### Pandas
+### Pandas: Basics
 - Read in a .csv file: ```pd.read_csv(<file path>)```
   - This returns a *DataFrame*; ```df = pd.read_csv(<file path>)```
 - What's a DataFrame (df)?
-  - Kind of like an object/class that contains useful methods for working with data
+  - Kind of like an object/class that contains useful methods for working with its data
 - Printing the df -> gives the rows of the .csv like an Excel sheet
   - The rows could be numbered starting from 0, or in general an array of integers called the *DataFrame index*
   - The index can be ints, strings, times, or anything
   - ```print(df.index)``` -> RangeIndex(start=0, stop=<stop>, step=<increment>)
 - How to get the columns of the df?
-  - ```print(df.columns)``` -> ```Index(['<col1name>', '<col2name>', ...])```
+  - ```print(df.columns)``` -> ```Index(['<col1name>', '<col2name>', ...])``` (array)
 - The indices and column names help arrange and label data
 - .csv's data can be viewed without its labels: ```df.values``` -> just gives an array of rows
   - Data type of ```df.values``` is ```numpy.ndarray```
-    - Under the hood, pandas stores data in Numpy ndarrays (short for N-dimensional arrays) that store 
+    - Under the hood, pandas stores data in Numpy "ndarrays" (short for N-dimensional arrays) that store 
       any # of values; Numpy arrays are a standard data type for storing/performing calculations on data in Python
 - df helpers
   - ```df.head()```: first 5 rows
@@ -215,29 +217,61 @@ Initialized with ```( )``` parentheses
   - ...find general statistical info? ```df.describe()``` - returns count/mean/std/min for columns
     - We can also group by a column and then get statistics on that grouping
       - E.g. ```df.groupby("column_name").describe()```
-- Accessing and slicing dfs
-  - Why? Because much of the time we extract the interesting portion of the data, get rid of the rest, use part of the 
-    data for training a model, another part for testing the model, and so on. Pandas can help with this
-  - Get a single column's data: ```col = df["column_name"]```
-    - This data type is ```type(col)``` or a ```Series```, like a 1D DataFrame
-    - Many methods apply only to Series but not to dfs
-  - Get multiple columns of data: ```cols_data = df[["col_1_name", "col_2_name"]]```
-    - Pass in *list* of columns
-    - Then can run ```.head()```, etc.
-    - What is the ```type(cols_data)```? df (>1 col)
-  - Get only x number of indices from a df: ```df_x = df.loc[:x]```
-    - Contrary to list slicing, ```x``` is included in the index (inclusive indexing)
-    - If indices are NOT integers, would have to specify the indices
-      - e.g. for indices "a" and "b", ```df2.loc[["a", "b"]]```
-  - Get certain indices and certain columns (akin to a "sub" df)
-    - E.g. for indices "a" and "b" and columns "green" and blue": ```df2_2gb = df2.loc[["a", "b"], ["green", "blue"]]```
-      - Pass in a list of the indices and a separate list of the cols
-      - ![DF Slice Row](img/df_slice_row_col.png)
-  - If needing to treat a df like an N-dim. array or list and access contents via int row/col numbers, need ```.iloc()```
-    - E.g. ```df2_i = df2.iloc[:2, 1:]```, i.e. get all rows up to 2nd, and all cols starting at 1st
-  - ```.loc()```: tell pandas to return specific index and column *names*
-  - ```.iloc()```: tell pandas to return specific row and column *numbers*
-  - 
+
+### Pandas: Accessing and slicing DataFrames
+Why? Because much of the time we extract the interesting portion of the data, get rid of the rest, use part of the 
+  data for training a model, another part for testing the model, and so on. Pandas can help with this
+
+Get a single column's data: ```col = df["column_name"]```
+- This data type is ```type(col)``` or a ```Series```, like a 1D DataFrame
+- Many methods apply only to Series but not to dfs (e.g. ```.unique()```)
+
+Get multiple columns of data: ```cols_data = df[["col_1_name", "col_2_name"]]```
+- Pass in *list* of columns
+- Then can run ```.head()```, etc.
+- What is the ```type(cols_data)```? df (>1 col)
+
+Get only x number of indices from a df: ```df_x = df.loc[:x]```
+- Contrary to list slicing, ```x``` is included in the index (inclusive indexing)
+- If indices are NOT integers, would have to specify the indices
+  - e.g. for indices "a" and "b", ```df2.loc[["a", "b"]]```
+
+Get certain indices and certain columns (akin to a "sub" df)
+- E.g. for indices "a" and "b" and columns "green" and blue": ```df2_2gb = df2.loc[["a", "b"], ["green", "blue"]]```
+  - Pass in a list of the indices and a separate list of the cols
+  - ![DF Slice Row](img/df_slice_row_col.png)
+
+If needing to treat a df like an N-dim. array or list and access contents via int row/col numbers, need ```.iloc()```
+- E.g. ```df2_i = df2.iloc[:2, 1:]```, i.e. get all rows up to 2nd, and all cols starting at 1st
+- ```.loc[]```: tell pandas to return specific index and column *names*
+- ```.iloc[]```: tell pandas to return specific row and column *numbers*
+
+What if we want to get the last (or final) x # of rows of a df? Negative index
+- ```df.iloc[-x:]```
+
+What if we wanted to *select* a subset of data *based on a logical condition*? -> Logical slicing
+- Format: ```df_subset = df.loc[logical_condition, column_names]```, ```logical_condition``` is array of same length
+  as the df index except all elements either ```True``` or ```False```
+  - To create ```logical_condition``` array, relate dataframe part of interest to some value with a logical operator
+    - E.g. ```logical_condition = df["species"] == "setosa"```
+      - ```df["species"] == "setosa"```: using the species column, compares each of its rows' species value to 
+        "setosa", effectively returning a column of bools (with indices)
+      - ![Logical slicing](img/slicing_logical.png)
+      - Then use this bool column as argument to ```.loc[]``` to slice
+      - (seems like 2nd argument of column/s is optional)
+      - ![Logical slicing 2](img/slicing_logical_2.png)
+- Format for multiple comparisons:
+  - ```df_subset = df.loc[logical_cond_1 & logical_cond_2, columns_to_show]```
+  - Why ```&``` operator instead of ```and```? (using the latter throws ambiguity error)
+    - Because pandas overloads the bitwise operator in order to do element-wise filtering, row-by-row
+      across the array
+  - ![Pandas bitwise overload](img/pandas_overload_bitwise.png)
+
+What if we want to slice, column-wise, by the column's name (instead of index)?
+- ```df.columns.get_loc("<column_name>")``` -> returns index of column_name, L->R
+- E.g. get the final 50 rows of data with only the column named "petal_length" 
+  (reminder: index column counts as 0th)
+  ```col_idx = df.columns.get_loc("petal_length") ... df_final = df.iloc[-50:, col_idx]```
 
 ### Parsing data
 
