@@ -185,8 +185,8 @@ Initialized with ```( )``` parentheses
 3. [Pandas: Accessing & slicing DataFrames](#pandas-accessing-and-slicing-dataframes)
 4. [Pandas: Merging DataFrames](#pandas-merging-dataframes)
 5. [Pandas: Saving DataFrames](#pandas-saving-dataframes)
-5. [Pandas: Parsing Data](#parsing-data)
-6. [Pandas: Alternatives](#pandas-alternatives)
+6. [Pandas: Parsing Data](#parsing-data)
+7. [Pandas: Alternatives](#pandas-alternatives)
 
 ### Specific package imports
 - Pandas: ```import pandas as pd```
@@ -361,6 +361,9 @@ Solutions?
 [Back to top](#table-of-contents)
 
 ## Data Visualization
+1. d
+2. d
+3. 
 
 [Back to top](#table-of-contents)
 
