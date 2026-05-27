@@ -361,9 +361,41 @@ Solutions?
 [Back to top](#table-of-contents)
 
 ## Data Visualization
-1. d
-2. d
-3. 
+1. [The Basics](#the-basics)
+2. [Scatterplots, Correlation](#scatterplots-correlation)
+3. [Histograms](#histograms)
+4. [Box Plots](#box-plots)
+5. [Time Series Data](#time-series-data)
+6. [More Advanced Plotting](#more-advanced-plotting)
+7. [Plot Params](#plot-params)
+8. [Multi-Panel Plots](#multi-panel-plots)
+9. [Heatmaps](#heatmaps)
+10. [Surface Plots](#surface-plots)
+11. [Animations](#animations)
+12. [Geospatial Visualization](#geospatial-visualization)
+
+### The Basics:
+### Scatterplots, Correlation
+
+### Histograms
+
+### Box Plots
+
+### Time Series Data
+
+### More Advanced Plotting:
+
+### Plot Params
+
+### Multi-Panel Plots
+
+### Heatmaps
+
+### Surface Plots
+
+### Animations
+
+### Geospatial Visualization
 
 [Back to top](#table-of-contents)
 
