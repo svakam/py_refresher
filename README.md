@@ -573,6 +573,7 @@ Properties
 filtered and extracted into DataFrame, ensure DateTime data is converted to *pandas DateTime type*:
 - e.g. `pd.to_datetime(<dataframe variable>["<column in df>"])`
 - If running `df.info()`, column should now appear under `Dtype` of `datetime64[...]`
+- Direct update on the df column: e.g. `df_full["date_utc"] = pd.to_datetime(df_full["date.utc"])"`
 
 Initialize and plot a figure object:
 ```
@@ -583,15 +584,15 @@ plt.plot(<df_col1>, <df_col2>) # make the plot
 DateTime ticks in axis may be obscured:
 - Create date range object (or pass in directly) with pandas: 
   `dr = pd.date_range(start=<str_date1>, end=<str_date2>, freq=<interval>)`
-  - freq: a number followed by D, M, or Y (e.g. `freq=5D`)
-- Set x-axis tick positions: `plt.xticks(dr)`
+  - freq: a number followed by D, M, or Y (e.g. `freq=5D`)`
+- Set x-axis tick positions with date range object: `plt.xticks(dr)`
   - Rotate/offset the labels: `fig.autofmt_xdate()`
 
 ### More Advanced Plotting:
 Best for more professional and formal presentation of data
 ### Plot Params
 Default matplotlib labels are hard to reach on bigger screens; they stay the same size as a default computer screen, 
-even between screens. *Pass in a params object (i.e. params = { }) with label/font sizes*
+even between screens. *Pass in a parameter dictionary (i.e. params = { }) with label/font sizes*
 - Param objects with nested params to modify:
   - `axes` (for label size)
   - `font` (for size and type) 
@@ -606,20 +607,62 @@ even between screens. *Pass in a params object (i.e. params = { }) with label/fo
   "legend.fontsize": 16,
   "xtick.labelsize": 18,
   "ytick.labelsize": 18,
+  "text.usetext": True, # for LaTeX / TeX; set to False if running slow/not working
 }
   ```
 
 Then pass the object into `plt.rcParams.update()`, e.g. `plt.rcParams.update(params)`
 
+Can also use a mpl package `matplotlib.dates as mdate` for improved date formatting (below).
+
+Can also pass in the same parameter dictionary to Seaborn and even combine matplotlib with it to use its figure methods:
+```
+sns.set_theme(rc=params) # seaborn
+fig = plt.figure() # mpl
+ax = sns.lineplot(df, axes, ...) # seaborn figure object
+ax.set_xticks(<date range obj>)
+ax.set_ylabel(r"NO$_2$ concentration ($\mu$g\L)") # formatting with latex
+ax.set_xlabel(...)
+ax.set_title(...)
+ax.xaxis.set_major_formatter(mdate.DateFormatter("%m/%d")) # custom x-tick with latex
+fig.autofmt_xdate()
+fig.set_size_inches(10, 5) # custom size
+```
+
+
 ### Multi-Panel Plots
+Best for multiple subplots in a single figure.
+
+Algorithm:
+- Read data into a df (e.g. read_csv)
+- Convert time series into appropriate DateTime format
+- Get list of unique axes along same dimension (e.g. `cities = df["city"].unique()`)) 
+- Initialize plot and subplot vars: `fig, ax = plt.subplots (<# subplots in rows>, <# subplots in cols>, sharex=<bool>`
+  - Returns the figure containing each template subplot `fig` and an array of the template subplots `ax`
+- Iterate through unique list (e.g. `for i, city in enumerate(cities):`)
+  - Extract column from data for each item to create a subplot for
+  - Set labels
+- Autoformat date and set sizes
 
 ### Heatmaps
+Necessary to visualize how one variable changes as a *function of two other variables*
 
-### Surface Plots
+May need to pivot the data to create a 2D grid to plot (e.g. `flights = flights.pivot(index="month", columns="year", 
+values="passengers")`) (i.e. put x axis on y, y on x)
+- index: value to now index by
+- columns: self-explanatory
+- values: the cell values (probably was another column in the old grid)
+
+`ax = sns.heatmap(<dataset>, cbar_kws={'label': '<the value of 'values'>`})`
+
+### Surface Plots (3D)
+Usually for optimization settings. See notebook
 
 ### Animations
+See notebook
 
 ### Geospatial Visualization
+See notebook
 
 [Back to top](#table-of-contents)
 
