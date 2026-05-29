@@ -667,5 +667,149 @@ See notebook
 [Back to top](#table-of-contents)
 
 ## Data Preparation
+1. [Numpy Basics](#numpy-basics)
+2. [Stats Review](#stats-review)
+3. [Visual Tools for Outlier Deteection](#visual-tools-for-outlier-detection)
+4. [NaN Handling and Imputation](#nan-handling-and-imputation)
+5. [Smoothing Techniques](#smoothing-techniques)
+
+### Numpy Basics
+As seen before, values stored in a pandas DataFrame are just numpy arrays
+
+#### Basics of Numpy Arrays
+Import: `import numpy as np`
+
+Base numpy data type is the *n-dimensional array*; behaves like a Python list but better with time and space complexity
+
+Create a numpy array from a Python list:
+- `numpy_arr = np.array([py_list])`
+
+Slice/extract:
+- E.g. `numpy_arr[0]`, `numpy_arr[-1:]`
+
+Apply a comparison operator to return a boolean array containing comparison results of each array value:
+- E.g. `numpy_arr < 3` -> array([True, True, False, ...])
+- This allows *extraction* of the array based on what returned True:
+  - E.g. `numpy_arr[numpy_arr < 3]` -> returns only portion of array that returned True in logical condition
+
+NaN values: handled with `np.nan` type
+- This is a float data type, so if trying to replace values in array with np.nan, need to type the whole array to hold
+  floats (or throws ValueError: cannot convert float NaN to <data type that's in there now>)
+  - E.g. `numpy_arr = np.array(py_list, dtype=np.float64)`
+  - E.g. `numpy_arr = np.array(py_list.astype(float)`
+
+#### Initialization Shortcuts
+
+np.linspace(min, max, # values)
+
+np.arange(min, max, spacing) (e.g. `np.arange(1, 10, 0.5`))
+
+#### Math with Arrays
+Broadcasting (arr + x -> [arr[0] + x, arr[1] + x, ...])
+
+np.argsort(a) -> sorts by index
+
+a.sort(axis optional)
+
+#### Image-based processing
+```
+from skimage import io
+photo = io.imread('image')
+type(photo)
+photo.shape -> width, height, # of channels (3 if RGB)
+```
+
+#### Math with Matrices
+- Axis: axis=0 -> looking at columns, axis=1 -> looking at rows
+
+Initialize random mxn matrix: `matr = np.random.rand(3,3)`
+
+col_1 = example_matrix[:, 0] : extracts all rows within the 0th column
+
+last_element = example_matrix[2,2]
+
+For matrices a and b,
+
+Element-wise multiplication: `a * b` (multiplies elements in identical positions across two matrices of same size)
+
+Matrix-multiplication: `a.dot(b)` (combines rows of 1st matrix with columns of second)
+
+Element-wise comparison: `a == b`, `a > b`
+
+Array-wise comparison: `np.array_equal(a, b)`
+
+Logical or: `np.logical_or(a, b)`
+
+Logical and: `np.logical_and(a, b)`
+
+Transpose (rows become columns, columns become rows): `a.T`
+
+Combine arrays: `np.ravel(a, b)`
+
+
+Reshape: `arr = arr.reshape(desired # rows, desired # cols)`
+
+#### Transcendental functions
+How we work with exponential/sinusoidal/logarithmic functions
+
+E.g. Sin: `np.sin(np.arange(x))` -> [np.sin(0), np.sin(1), np.sin(2), ...]
+
+E.g. Log: `np.log(...)`
+
+E.g. Exp: `np.exp(...)`
+
+Zeroes: np.zeros((3,3))
+
+Ones: np.ones((5,)) -> 1 row of 1's
+
+Array of NaN: np.zeros((5,2)) * np.nan -> 5 rows and 2 cols of None
+
+#### Reductions
+AKA aggregations; e.g. avg, total, other derived quantities from actual amounts for further analysis
+
+Ultimately creates features for underlying ML processing
+
+E.g. `np.sum(np.array([1,2,3,4])`
+
+E.g. `arr.min()`: minimum of array
+
+E.g. `arr.argmin(arr)`: gets the index of the smallest value in array
+
+### Stats Review
+
+#### Mean, Median, Standard Deviation
+
+Mean: `arr.mean()`
+
+Median: `np.median(arr)` or `np.median(matr, axis=-1) # last axis`
+
+If mean ~ median, then distribution is close to being uniform
+
+Std dev: `arr.std()` -> provides value where 68% of the data is
+
+#### Probability Density Functions
+
+#### Probablity Distributions
+
+### Visual Tools for Outlier Detection
+
+### NaN Handling
+
+#### Proper Labeling
+
+#### Dropping NaN Values
+
+#### Imputation
+
+#### Advanced Imputers
+
+### Smoothing Techniques
+
+#### Moving Average
+
+#### Median Filter
+
+
+
 
 [Back to top](#table-of-contents)
