@@ -704,8 +704,19 @@ np.linspace(min, max, # values)
 
 np.arange(min, max, spacing) (e.g. `np.arange(1, 10, 0.5`))
 
+Zeroes: np.zeros((3,3))
+
+Ones: np.ones((5,)) -> 1 row of 1's
+
+Array of NaN: np.zeros((5,2)) * np.nan -> 5 rows and 2 cols of None
+
+np.empty() creates array of uninitialized array elements from available mem space and may be faster to execute. 
+np.zeros() outputs an initialized array of value 0. 
+
+
 #### Math with Arrays
-Broadcasting (arr + x -> [arr[0] + x, arr[1] + x, ...])
+Broadcasting: multiplying a vector with a scalar
+- E.g. (arr + x -> [arr[0] + x, arr[1] + x, ...])
 
 np.argsort(a) -> sorts by index
 
@@ -746,8 +757,14 @@ Transpose (rows become columns, columns become rows): `a.T`
 
 Combine arrays: `np.ravel(a, b)`
 
-
 Reshape: `arr = arr.reshape(desired # rows, desired # cols)`
+
+Slicing
+- Syntax: two_dim[row_start:row_end]
+- For array [[1,2,3],[4,5,6][7,8,9]]:
+  - array[0:2] -> get first two rows
+  - array[1:3] -> last two rows
+  - array[:,1] -> sliced 2D columns (2,5,8)
 
 #### Transcendental functions
 How we work with exponential/sinusoidal/logarithmic functions
@@ -757,12 +774,6 @@ E.g. Sin: `np.sin(np.arange(x))` -> [np.sin(0), np.sin(1), np.sin(2), ...]
 E.g. Log: `np.log(...)`
 
 E.g. Exp: `np.exp(...)`
-
-Zeroes: np.zeros((3,3))
-
-Ones: np.ones((5,)) -> 1 row of 1's
-
-Array of NaN: np.zeros((5,2)) * np.nan -> 5 rows and 2 cols of None
 
 #### Reductions
 AKA aggregations; e.g. avg, total, other derived quantities from actual amounts for further analysis
