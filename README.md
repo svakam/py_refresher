@@ -213,7 +213,10 @@ Initialized with ```( )``` parentheses
   - Data type of ```df.values``` is ```numpy.ndarray```
     - Under the hood, pandas stores data in Numpy "ndarrays" (short for N-dimensional arrays) that store 
       any # of values; Numpy arrays are a standard data type for storing/performing calculations on data in Python
-- df helpers
+- Append a row
+  - `df = df.loc[<get last row + 1>, <get all rows>] = [new row]`
+    - `df = df.loc[df.index.max() + 1, :] = ['john', 20, 1000]`
+- Other df helpers
   - ```df.head()```: first 5 rows
   - ```df.tail()```: last 5 rows
   - ```df.shape```: returns (# rows, # cols) of the data
@@ -232,6 +235,8 @@ Why? Because much of the time we extract the interesting portion of the data, ge
 Get a single column's data: ```col = df["column_name"]```
 - This data type is ```type(col)``` or a ```Series```, like a 1D DataFrame
 - Many methods apply only to Series but not to dfs (e.g. ```.unique()```)
+- If no spaces in column name, can directly get column like a property of the DataFrame
+  - E.g. `iris.SepalLengthCm`, `iris.Species`
 
 Get multiple columns of data: ```cols_data = df[["col_1_name", "col_2_name"]]```
 - Pass in *list* of columns
@@ -242,6 +247,8 @@ Get only x number of indices from a df: ```df_x = df.loc[:x]```
 - Contrary to list slicing, ```x``` is included in the index (inclusive indexing)
 - If indices are NOT integers, would have to specify the indices
   - e.g. for indices "a" and "b", ```df2.loc[["a", "b"]]```
+- `.loc`: 1st argument is accessing rows, 2nd argument is accessing columns *by name*
+- `.iloc`: both arguments access rows and columns by index
 
 Get certain indices and certain columns (akin to a "sub" df)
 - E.g. for indices "a" and "b" and columns "green" and blue": ```df2_2gb = df2.loc[["a", "b"], ["green", "blue"]]```
@@ -279,6 +286,20 @@ What if we want to slice, column-wise, by the column's name (instead of index)?
 - E.g. get the final 50 rows of data with only the column named "petal_length" 
   (reminder: index column counts as 0th)
   ```col_idx = df.columns.get_loc("petal_length") ... df_final = df.iloc[-50:, col_idx]```
+
+What if we want to access the value at a particular row/col? 
+- `df.iat[<row #>, <col #>]`
+  - E.g. `iris.iat[82, 1]` -> np.float64(5.8) (the value at the 82nd row in first column = 5.8)
+- `df.at[<row #>, <col name>]` (same as above but column name instead of #)
+
+What if we want to get rows of a known column by passing a list of desired column *values*? 
+- `df.<col_name>.isin([<col_category_1>, <col_category_2>])`
+  - E.g. `df.Species.isin(["virginica", "versicolor"]).tail()` -> last 5 rows of df that returns rows only containing 
+    "veriscolor" and "virginica" as column values in "species" column
+
+What if we want to try to get column values starting with a known string? 
+- `df.<col_name>.str.startswith(<substring>)`
+  - E.g. `df.Species.str.startswith("seto")` -> only column values in "Species" column that starts with "seto"
 
 ### Pandas: Merging DataFrames
 Pandas methods for merging rely on relational db-based languages (e.g. SQL)
