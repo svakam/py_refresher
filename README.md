@@ -222,6 +222,8 @@ Initialized with ```( )``` parentheses
   - ...find general statistical info? ```df.describe()``` - returns count/mean/std/min for columns
     - We can also group by a column and then get statistics on that grouping
       - E.g. ```df.groupby("column_name").describe()```
+  - Sort values: ```df.sort_values(by=<col name>, ascending=<false/true>)```
+    - E.g. ```iris.sort_values(by="sepal_length", ascending=False).head()```
 
 ### Pandas: Accessing and slicing DataFrames
 Why? Because much of the time we extract the interesting portion of the data, get rid of the rest, use part of the 
