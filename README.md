@@ -750,6 +750,7 @@ See notebook
 3. [Visual Tools for Outlier Deteection](#visual-tools-for-outlier-detection)
 4. [NaN Handling and Imputation](#nan-handling-and-imputation)
 5. [Smoothing Techniques](#smoothing-techniques)
+6. [Appendix](#appendix)
 
 ### Numpy Basics
 As seen before, values stored in a pandas DataFrame are just numpy arrays
@@ -1049,5 +1050,16 @@ Removes noise and provides an improved representation of the "real" signal. Few 
      plt.imshow(img_filt) # plt library has .imshow() to plot it like a graph
   ```
 
+### Appendix
+
+#### Type consistency & casting
+- Reset data type: `df["<col_name>"].astype(<new data type>)`
+- Replace comma with decimal for intended numbers: `df["col_name"] = df["col_name"].str.replace(",", ".").astype(float)`
+- The desired number is part of a string at the very end: `df["col_name"] = [float(i.split("<char>")[-1]) for i in df["col_name"].values]`
+
+#### Log-normal distribution
+Arise in physical scenarios where a variable is restricted to positive values. If variable is log-normally distributed, 
+then the natural log of the variable is normally-distributed. 
+`np.log(df["<col_name>"])`
 
 [Back to top](#table-of-contents)
