@@ -194,7 +194,6 @@ Initialized with ```( )``` parentheses
 - Pandas: ```import pandas as pd```
 - Numpy: ```import numpy as np```
 - Scikit-learn: import one class or function at a time as needed (LinearRegression, etc.)
-- 
 
 ### Pandas: Basics
 - Read in a .csv file: ```pd.read_csv(<file path>)```
@@ -228,6 +227,19 @@ Initialized with ```( )``` parentheses
       - E.g. ```df.groupby("column_name").describe()```
   - Sort values: ```df.sort_values(by=<col name>, ascending=<false/true>)```
     - E.g. ```iris.sort_values(by="sepal_length", ascending=False).head()```
+  - Can also read in .xls (older version of Excel sheet)
+    - `pip install xlrd`
+    - Direct from package:
+      - `book = xlrd.open_workbook("<filepath>")`
+      - Methods:
+        - `.nsheets`: gets # of worksheets
+        - `.sheetnames()`: gets all sheet names
+        - Get one sheet by index: `sh = book.sheet_by_index(idx)`
+          - Get name, # rows and # cols for a sheet:
+            - `sh.name, sh.nrows, sh.ncols`
+    - Via Pandas:
+      - `df = pd.read_excel('filepath.xls', 'df name', index_col=<...>, na_values=[...])`
+- Drop columns: `df.drop([list of col names], axis=1)`
 
 ### Pandas: Accessing and slicing DataFrames
 Why? Because much of the time we extract the interesting portion of the data, get rid of the rest, use part of the 
@@ -317,6 +329,10 @@ Pandas methods for merging rely on relational db-based languages (e.g. SQL)
 - Can also merge on multiple keys
   - E.g. ![Left right](img/left_right_twokeys.png)
   - ![Merge two keys right join](img/merge_twokeys_joinright.png)
+- Suffixes used for labeling: 
+  - E.g. `df_left.merge(..., suffixes=('_l', '_r'))` -> labels all left columns with appended '_l' and right with appended '_r'
+- Can also merge directly from pandas: `pd.merge(left, right, on=...)`
+- 
 
 ### Pandas: Saving DataFrames
 ```df.to_csv(<file_path>)```
@@ -529,6 +545,13 @@ find the necessary executables on system's PATH.
 - Quick fixes:
   - If matplotlib imported as `mpl`, turn off high-quality LaTeX directly from mpl: `mpl.rcParams['text.usetex] = False`
   - Reset matplotlib's pyplot instance (e.g. `import matplotlib.pylot as plt`) to defaults: `plt.rcdefaults()`
+
+### Bar Graphs
+Directly from pandas: can get value counts, call plot and then bar
+- E.g. Show survival rates of titanic
+  - `pd.value_counts(titanic_df['survived']).plot.bar()`
+    - (to be deprecated)
+  - `titanic_df['survived'].plot.bar()`
 
 ### Scatterplots, Correlation
 The best choice for comparing two variables
@@ -979,6 +1002,9 @@ When is it acceptable to drop NaN?
     outside of the dropped portion
 
 If a significant portion of data would be excluded by dropping NaN rows, then must *impute* the missing values
+
+First, how to get a high-level view of existing nulls in the data:
+- `df.isnull().sum()` -> returns df of all row names with # of nulls for each row
 
 #### Imputation
 Replacing NaN with "educated guess" for a real value that could best take its place. There are multiple ways to do this
