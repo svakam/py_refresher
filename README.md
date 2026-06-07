@@ -738,12 +738,50 @@ Algorithm:
 - Read data into a df (e.g. read_csv)
 - Convert time series into appropriate DateTime format
 - Get list of unique axes along same dimension (e.g. `cities = df["city"].unique()`)) 
-- Initialize plot and subplot vars: `fig, ax = plt.subplots (<# subplots in rows>, <# subplots in cols>, sharex=<bool>`
-  - Returns the figure containing each template subplot `fig` and an array of the template subplots `ax`
+- Initialize plot and subplot vars: `fig, ax = plt.subplots(<# subplots in rows>, <# subplots in cols>, sharex=<bool>)`
+  - Returns the figure containing each template subplot (`fig`) and an array of the template subplots `ax`
 - Iterate through unique list (e.g. `for i, city in enumerate(cities):`)
   - Extract column from data for each item to create a subplot for
   - Set labels
 - Autoformat date and set sizes
+
+Another e.g.: create subplots that test each kernel on each type of morphological transformation
+(kernels iterate by row (outer loop), transformation by column (inner loop))
+```
+# set up kernels
+kernel   = np.ones((1,1), np.uint8)
+kernel_2 = np.ones((2,2), np.uint8)
+kernel_3 = np.ones((3,3), np.uint8)
+kernel_4 = np.ones((4,4), np.uint8)
+kernels     = [kernel, kernel_2, kernel_3, kernel_4]
+num_kernels = len(kernels)
+
+# initialize plot
+plt.figure(figsize=(20, 15))
+
+for i in range(num_kernels):
+    m = i + 1
+    titles     = [f"Opening {m}x{m}", f"Closing {m}x{m}", f"Gradient {m}x{m}"]
+    num_titles = len(titles)
+
+    opening_morph  = cv.morphologyEx(edges, cv.MORPH_OPEN,     kernels[i])
+    closing_morph  = cv.morphologyEx(edges, cv.MORPH_CLOSE,    kernels[i])
+    gradient_morph = cv.morphologyEx(edges, cv.MORPH_GRADIENT, kernels[i])
+    list_morphs    = [opening_morph, closing_morph, gradient_morph]
+
+    for j in range(num_titles):
+        # set up indexing in plot
+        subplot_idx_in_plot = i * num_titles + j + 1
+        plt.subplot(num_kernels, num_titles, subplot_idx_in_plot)
+        
+        # image and labeling
+        plt.imshow(list_morphs[j], cmap="gray")
+        plt.title(titles[j])
+        plt.axis("off") # remove x/y tick marks
+
+plt.tight_layout() # auto-adjust spacing
+plt.show()
+```
 
 ### Heatmaps
 Necessary to visualize how one variable changes as a *function of two other variables*
