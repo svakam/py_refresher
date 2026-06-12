@@ -240,6 +240,10 @@ Initialized with ```( )``` parentheses
     - Via Pandas:
       - `df = pd.read_excel('filepath.xls', 'df name', index_col=<...>, na_values=[...])`
 - Drop columns: `df.drop([list of col names], axis=1)`
+  - Drop values *within* a column (i.e. we don't want any row that contains unwanted values for that column)
+    - E.g. for a column `CASE_STATUS`, we don't want to keep any values
+      `to_drop = ["INVALIDATED", "REJECTED", "UNASSIGNED"]`
+      - `final_dataset = dataset[~dataset['CASE_STATUS'].isin(to_drop)]`
 
 ### Pandas: Accessing and slicing DataFrames
 Why? Because much of the time we extract the interesting portion of the data, get rid of the rest, use part of the 
@@ -808,7 +812,7 @@ See notebook
 ## Data Preparation
 1. [Numpy Basics](#numpy-basics)
 2. [Stats Review](#stats-review)
-3. [Visual Tools for Outlier Deteection](#visual-tools-for-outlier-detection)
+3. [Visual Tools for Outlier Detection](#visual-tools-for-outlier-detection)
 4. [NaN Handling and Imputation](#nan-handling-and-imputation)
 5. [Smoothing Techniques](#smoothing-techniques)
 6. [Appendix](#appendix)
@@ -967,7 +971,7 @@ We can still calculate mean/median/std from a pdf:
 - std: sqrt of the area under the curve of (x - mean)^2 * f(x)dx
 - ![Functions](img/integrals.png)
 
-#### Probablity Distributions
+#### Probability Distributions
 We typically won't know pdfs for whatever we're interested in, but there are plenty of pdfs that apply to certain 
 problems. 
 
@@ -1038,6 +1042,9 @@ When is it acceptable to drop NaN?
 - Data rows that are being dropped aren't "special"
   - What does this formally mean? The features in the row that are NOT NaN have a similar distribution both within and
     outside of the dropped portion
+
+Dropping NaNs:
+- `df.dropna(inplace=True)`, or if want to return an updated df, `df = df.dropna()`
 
 If a significant portion of data would be excluded by dropping NaN rows, then must *impute* the missing values
 
@@ -1125,5 +1132,17 @@ Removes noise and provides an improved representation of the "real" signal. Few 
 Arise in physical scenarios where a variable is restricted to positive values. If variable is log-normally distributed, 
 then the natural log of the variable is normally-distributed. 
 `np.log(df["<col_name>"])`
+
+#### Convert categorical data for ML
+Done by `from sklearn.preprocessing import LabelEncoder`
+For *each column*, first create an instance of LabelEncoder, then on that instance, pass in the column to update via
+`.fit_transform(<table>[:, <column #>])` and reset the original column to that returned column set
+- E.g.
+  - Starting with column 1
+    - `labelencoder_X = LabelEncoder()`
+    - `X[:, 0] = labelencoder_X.fit_transform(X[:, 0])`
+  - Then column 2
+    - `labelencoder_X1 = LabelEncoder()`
+    - `X[:, 1] = labelencoder_X1.fit_transform(X[:, 1])`
 
 [Back to top](#table-of-contents)
